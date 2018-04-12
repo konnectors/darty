@@ -1,18 +1,15 @@
 {
   "version": "1.0.0",
-  "name": "konnector name",
+  "name": "Darty",
   "type": "node",
-  "slug": "konnectorslug",
-  "description": "description",
-  "source": "git://github.com/konnectors/cozy-konnector-thename.git",
+  "slug": "darty",
+  "description": "Fetch your Darty bills",
+  "source": "git://github.com/konnectors/cozy-konnector-darty.git",
   "locales": {
     "fr": {
       "permissions": {
-        "books": {
-          "description": "Utilisé pour sauvegarder les références de vos livres"
-        },
         "files": {
-          "description": "Utilisé pour sauvegarder les couvertures de vos livres"
+          "description": "Utilisé pour sauvegarder les factures"
         },
         "accounts": {
           "description": "Utilisé pour récupérer les informations de votre compte"
@@ -21,12 +18,8 @@
     }
   },
   "permissions": {
-    "books": {
-      "description": "Required to save books' references",
-      "type": "io.cozy.books"
-    },
     "files": {
-      "description": "Required to save the covers",
+      "description": "Required to save the bills",
       "type": "io.cozy.files"
     },
     "accounts": {
