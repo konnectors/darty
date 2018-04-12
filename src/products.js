@@ -1,7 +1,6 @@
 const { log, saveBills } = require('cozy-konnector-libs')
 const { rootUrl, request } = require('./request')
-const cozyhelpers = require('./cozyhelpers')
-const filenamehelpers = require('./filenamehelpers')
+const helpers = require('./helpers')
 
 const tableUrl = rootUrl + '/webapp/wcs/stores/controller/ec/products/table'
 const billPath = '/webapp/wcs/stores/controller/OrderBillDisplay'
@@ -88,7 +87,7 @@ function parseRow($elem) {
 function fetchBillFiles(products, folderPath) {
   products = keepWhenBillAvailable(products)
   log('info', `Downloading ${products.length} bill(s)...`)
-  return cozyhelpers.mkdirp(folderPath).then(() => {
+  return helpers.mkdirp(folderPath).then(() => {
     const billEntries = products.map(billEntry)
     return saveBills(billEntries, folderPath, {
       identifiers: ['darty']
@@ -103,38 +102,17 @@ function keepWhenBillAvailable(products) {
 }
 
 function billEntry(product) {
-  const isoDateString = frToIsoDate(product.omnitureDate)
+  const { date, isoDateString } = helpers.parseFrenchDate(product.omnitureDate)
 
   return {
-    amount: validAmount(product.omniturePrix),
-    date: new Date(isoDateString),
+    amount: helpers.parseAmount(product.omniturePrix),
+    date,
     // Prefix filename with ISO-like date to get sensible default order.
     // Also include product description to help user identify its bills.
-    filename: filenamehelpers.normalize(
+    filename: helpers.normalizeFilename(
       `${isoDateString}-${product.description}.pdf`
     ),
     fileurl: rootUrl + product.billPath,
     vendor: 'Darty'
   }
-}
-
-function validAmount(productPrice) {
-  switch (typeof productPrice) {
-    case 'number':
-      return productPrice // Data attribute was already automatically converted
-    case 'string':
-      // Ignore any non-number char (including broken thousands separator).
-      // And replace comma with dot as decimal separator.
-      return parseFloat(productPrice.replace(/[^0-9,]/g, '').replace(/,/, '.'))
-    default:
-      log('warn', `Cannot parse product price: ${productPrice}`)
-  }
-}
-
-function frToIsoDate(frDateString) {
-  return frDateString
-    .match(/(\d{2})\/(\d{2})\/(\d{4})/)
-    .slice(1, 4)
-    .reverse()
-    .join('-')
 }
