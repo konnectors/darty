@@ -15,13 +15,13 @@ script:
   - yarn build
 deploy:
   - provider: script
-    repo: konnectors/cozy-konnector-template
+    repo: konnectors/cozy-konnector-darty
     skip-cleanup: true
     script: yarn deploy
     on:
       branch: master
   - provider: script
-    repo: konnectors/cozy-konnector-template
+    repo: konnectors/cozy-konnector-darty
     skip-cleanup: true
     script: DEPLOY_BRANCH=latest yarn deploy
     on:

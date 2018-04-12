@@ -1,5 +1,5 @@
-[Cozy][cozy] Darty
-==================
+[Cozy][cozy] Darty connector
+============================
 
 What's Cozy?
 ------------
@@ -24,7 +24,7 @@ This connector uses [cozy-konnector-libs](https://github.com/cozy/cozy-konnector
 
 ### Maintainer
 
-The lead maintainers for this konnector is @sebn for Cozy Cloud
+The lead maintainers for this konnector is @sebn for Cozy Cloud.
 
 
 ### Get in touch
@@ -40,7 +40,7 @@ You can reach the Cozy Community by:
 License
 -------
 
-Darty konnector is developed by Cozy Cloud and distributed under the [AGPL v3 license][agpl-3.0].
+Darty connector is developed by Cozy Cloud and distributed under the [AGPL v3 license][agpl-3.0].
 
 [cozy]: https://cozy.io "Cozy Cloud"
 [darty]: https://www.darty.com/
@@ -48,10 +48,5 @@ Darty konnector is developed by Cozy Cloud and distributed under the [AGPL v3 li
 [freenode]: http://webchat.freenode.net/?randomnick=1&channels=%23cozycloud&uio=d4
 [forum]: https://forum.cozy.io/
 [github]: https://github.com/cozy/
-[nodejs]: https://nodejs.org/
-[standard]: https://standardjs.com
 [twitter]: https://twitter.com/mycozycloud
-[webpack]: https://webpack.js.org
-[yarn]: https://yarnpkg.com
-[travis]: https://travis-ci.org
 [contribute]: CONTRIBUTING.md
