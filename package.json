@@ -1,0 +1,43 @@
+{
+  "name": "cozy-konnector-template",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konnectors/cozy-konnector-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPL-3.0",
+  "main": "./src/index.js",
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-cozy-app"
+    ]
+  },
+  "eslintIgnore": [
+    "build"
+  ],
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "cozy-run-dev",
+    "standalone": "cozy-run-standalone",
+    "build": "webpack",
+    "precommit": "yarn lint",
+    "lint": "eslint --fix .",
+    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/cozy-konnector-template.git}"
+  },
+  "dependencies": {
+    "cozy-konnector-libs": "3.8.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "4.5.1",
+    "cozy-jobs-cli": "1.0.9",
+    "eslint": "4.19.1",
+    "eslint-config-cozy-app": "0.5.1",
+    "git-directory-deploy": "1.5.1",
+    "husky": "0.14.3",
+    "webpack": "4.5.0",
+    "webpack-cli": "2.0.14"
+  }
+}
