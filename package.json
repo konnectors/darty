@@ -1,13 +1,13 @@
 {
-  "name": "cozy-konnector-template",
+  "name": "cozy-konnector-darty",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fetch your Darty bills",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/konnectors/cozy-konnector-template.git"
+    "url": "git+https://github.com/konnectors/cozy-konnector-darty.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["cozy", "connector", "darty", "bills"],
+  "author": "Cozy Cloud",
   "license": "AGPL-3.0",
   "main": "./src/index.js",
   "eslintConfig": {
@@ -25,10 +25,10 @@
     "build": "webpack",
     "precommit": "yarn lint",
     "lint": "eslint --fix .",
-    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/cozy-konnector-template.git}"
+    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/cozy-konnector-darty.git}"
   },
   "dependencies": {
-    "cozy-konnector-libs": "3.8.1"
+    "cozy-konnector-libs": "4.1.4"
   },
   "devDependencies": {
     "copy-webpack-plugin": "4.5.1",
