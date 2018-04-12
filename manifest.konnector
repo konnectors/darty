@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "name": "Darty",
+  "type": "node",
+  "slug": "darty",
+  "description": "Fetch your Darty bills",
+  "source": "git://github.com/konnectors/cozy-konnector-darty.git",
+  "locales": {
+    "fr": {
+      "permissions": {
+        "files": {
+          "description": "Utilisé pour sauvegarder les factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour récupérer les informations de votre compte"
+        }
+      }
+    }
+  },
+  "permissions": {
+    "files": {
+      "description": "Required to save the bills",
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "description": "Required to get the account's data",
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "cozy",
+    "url": "cozy.io"
+  }
+}
