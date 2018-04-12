@@ -1,5 +1,5 @@
-[Cozy][cozy] <YOUR SUPER NEW KONNECTOR NAME>
-=======================================
+[Cozy][cozy] Darty
+==================
 
 What's Cozy?
 ------------
@@ -8,10 +8,11 @@ What's Cozy?
 
 [Cozy] is a platform that brings all your web services in the same private space. With it, your webapps and your devices can share data easily, providing you with a new experience. You can install Cozy on your own hardware where no one's tracking you.
 
-What's this new konnector?
---------------------------
+What's this konnector?
+----------------------
 
-<YOUR DESCRIPTION HERE>
+This konnector retrieves your [Darty][darty] bills once the order is complete,
+provided the bill is available to download.
 
 ### Open a Pull-Request
 
@@ -23,7 +24,7 @@ This connector uses [cozy-konnector-libs](https://github.com/cozy/cozy-konnector
 
 ### Maintainer
 
-The lead maintainers for this konnector is <YOUR NAME>
+The lead maintainers for this konnector is @sebn for Cozy Cloud
 
 
 ### Get in touch
@@ -39,9 +40,10 @@ You can reach the Cozy Community by:
 License
 -------
 
-<YOUR KONNECTOR NAME> is developed by <your name> and distributed under the [AGPL v3 license][agpl-3.0].
+Darty konnector is developed by Cozy Cloud and distributed under the [AGPL v3 license][agpl-3.0].
 
 [cozy]: https://cozy.io "Cozy Cloud"
+[darty]: https://www.darty.com/
 [agpl-3.0]: https://www.gnu.org/licenses/agpl-3.0.html
 [freenode]: http://webchat.freenode.net/?randomnick=1&channels=%23cozycloud&uio=d4
 [forum]: https://forum.cozy.io/
