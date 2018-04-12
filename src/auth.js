@@ -1,4 +1,4 @@
-const { log } = require('cozy-konnector-libs')
+const { log, errors } = require('cozy-konnector-libs')
 const { rootUrl, request } = require('./request')
 
 const loginUrl = rootUrl + '/espace_client/connexion'
@@ -23,7 +23,7 @@ function authenticate(login, password) {
       log('info', 'Login successful.')
     })
     .catch(err => {
-      if (err.statusCode === 401) throw new Error('LOGIN_FAILED')
+      if (err.statusCode === 401) throw new Error(errors.LOGIN_FAILED)
       else throw err
     })
 }
