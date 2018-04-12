@@ -1,6 +1,7 @@
 const { log, saveBills } = require('cozy-konnector-libs')
 const { rootUrl, request } = require('./request')
 const cozyhelpers = require('./cozyhelpers')
+const filenamehelpers = require('./filenamehelpers')
 
 const tableUrl = rootUrl + '/webapp/wcs/stores/controller/ec/products/table'
 const billPath = '/webapp/wcs/stores/controller/OrderBillDisplay'
@@ -109,7 +110,9 @@ function billEntry(product) {
     date: new Date(isoDateString),
     // Prefix filename with ISO-like date to get sensible default order.
     // Also include product description to help user identify its bills.
-    filename: `${isoDateString} – ${product.description}.pdf`,
+    filename: filenamehelpers.normalize(
+      `${isoDateString}-${product.description}.pdf`
+    ),
     fileurl: rootUrl + product.billPath,
     vendor: 'Darty'
   }
