@@ -8,6 +8,12 @@
   "locales": {
     "fr": {
       "permissions": {
+        "bank operations": {
+          "description": "Utilisé pour relier les factures à des operations bancaires"
+        },
+        "bills": {
+          "description": "Utilisé pour sauver les données des factures"
+        },
         "files": {
           "description": "Utilisé pour sauvegarder les factures"
         },
@@ -18,6 +24,14 @@
     }
   },
   "permissions": {
+    "bank operations": {
+      "description": "Required to link bills to bank operations",
+      "type": "io.cozy.bank.operations"
+    },
+    "bills": {
+      "description": "Required to save the bills data",
+      "type": "io.cozy.bills"
+    },
     "files": {
       "description": "Required to save the bills",
       "type": "io.cozy.files"
