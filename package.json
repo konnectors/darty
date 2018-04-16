@@ -28,11 +28,11 @@
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/cozy-konnector-darty.git}"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.1.4"
+    "cozy-konnector-libs": "4.1.5"
   },
   "devDependencies": {
     "copy-webpack-plugin": "4.5.1",
-    "cozy-jobs-cli": "1.0.9",
+    "cozy-jobs-cli": "1.0.14",
     "eslint": "4.19.1",
     "eslint-config-cozy-app": "0.5.1",
     "git-directory-deploy": "1.5.1",
