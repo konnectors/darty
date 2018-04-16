@@ -1,12 +1,55 @@
 {
   "version": "1.0.0",
   "name": "Darty",
-  "type": "node",
+  "type": "konnector",
+  "language": "node",
+  "icon": "icon.svg",
   "slug": "darty",
-  "description": "Fetch your Darty bills",
   "source": "git://github.com/konnectors/cozy-konnector-darty.git",
+  "editor": "Cozy",
+  "vendorLink": "https://www.darty.com",
+  "categories": ["shopping"],
+  "fields": {
+    "email": {
+      "type": "email"
+    },
+    "password": {
+      "type": "password"
+    },
+    "advancedFields": {
+      "folderPath": {
+        "advanced": true,
+        "isRequired": false
+      }
+    }
+  },
+  "dataType": [
+    "bill"
+  ],
+  "permissions": {
+    "bank operations": {
+      "type": "io.cozy.bank.operations"
+    },
+    "bills": {
+      "type": "io.cozy.bills"
+    },
+    "files": {
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "Cozy",
+    "url": "cozy.io"
+  }
+  "langs": ["fr", "en"],
   "locales": {
     "fr": {
+      "short_description": "Récupère vos factures darty",
+      "long_description": "Récupère vos factures darty",
       "permissions": {
         "bank operations": {
           "description": "Utilisé pour relier les factures à des operations bancaires"
@@ -22,28 +65,23 @@
         }
       }
     }
-  },
-  "permissions": {
-    "bank operations": {
-      "description": "Required to link bills to bank operations",
-      "type": "io.cozy.bank.operations"
-    },
-    "bills": {
-      "description": "Required to save the bills data",
-      "type": "io.cozy.bills"
-    },
-    "files": {
-      "description": "Required to save the bills",
-      "type": "io.cozy.files"
-    },
-    "accounts": {
-      "description": "Required to get the account's data",
-      "type": "io.cozy.accounts",
-      "verbs": ["GET"]
+    "en": {
+      "short_description": "Fetch your darty bills",
+      "long_description": "Fetch your darty bills",
+      "permissions": {
+        "bank operations": {
+          "description": "Required to link bank operations to bills"
+        },
+        "bills": {
+          "description": "Required to save the bills data"
+        },
+        "files": {
+          "description": "Required to save the file documents"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
     }
-  },
-  "developer": {
-    "name": "cozy",
-    "url": "cozy.io"
   }
 }
