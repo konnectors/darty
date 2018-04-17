@@ -4,8 +4,10 @@ node_js:
 env:
   global:
     # cozy-bot GITHUB_TOKEN
-    # to generate yours : travis encrypt GITHUB_TOKEN=<your_GITHUB_TOKEN> -r konnectors/cozy-konnector-darty
+    # to generate yours : travis encrypt GITHUB_TOKEN=<your_GITHUB_TOKEN>
     - secure: "ps+VU4aOVV8CnxKsCaV2Weffh/inLYgUz11Sfay97cC+EUvfSOvifLINAi7U57gbCzu9bRkbRYxTDMxyPxYyS/pmSCOMdPP9YWeI/E6WKHykIJ+Zdfk4n9Mx2nt6WBDEqAkQDSz9ueSnFv5cT68ysT+vjXelZDnQ37M5JwZM2B2NeozIVY0n6cR0Bhk4Nlx51cqVr7oFh3WSKua+eBrf4+wWHuZ9wu3ogjzJuGEXv1RUQytzUBlxCAM8Ot2i/L7FyWkP1+oZEVZenmAtG0DWxJd5+gyUud46kAc2i5FAIvXhwdCoQfOElGhjrDK/X1s9ob4GgMv7/P9Q8bN4xp1d/JCLTUpVfei6csyst6r3Ukp8eIN3fbds5TkwteIk0Jhf0QaiFMXQLdlYxewlq8CrhmkT/L6jdkZj47a9y+n9x3wEmVIhjVq4b1bOjalbZHzRdSNy6hCcIuzmm2GFGlAuGPaXuecH2k6kQkIAQUpIcLbEul0q6OVVDjv5RqydTQj2GPE3RLhX8CP1EiOXYrz3qEiQ34/qS/EohaiGRzgfH4bIwZ4gUXw0g4NZXut5MPd1dUKroJ1+Piu/stXk7pHJqOFD8+n63a8GioOXQJVm/J8UqY7yYwOqbJWg9Ete5ULrykCSh7buOmhWuh/eCGQUCz0x5sPmy+FRQLnnZWdN7lE="
+    # Cozy REGISTRY_TOKEN
+    - secure: "Xuf5Xs3/CDNeOpGrOLSFQ49QUhZo/v/kqRC3UlW8FQ108E28wVGib1lPz366h+/uHNNGG92iy7MA/taLgr2PJVFVjOZSXkpfEKYg5H5daHJyvJZy+1PS45bG36WPnhOhLXyU0x1wppFz6FzjFvbzDc6zyh3b5gdttuDC7p1U/4SLAM9ATCoTmLcC86h9a6JrZ5y1KqlMwaB2T+RpXU9iqfyG3LisUPudHWkw8sRA1aY5ZPz6AYvV7GuzgLXZNO0SAa9d4Sm4msKWrmU2j/vE+JtAD1LDp9vjrU+3AIhWNtT8X1JcU3ri+74JQc3PBoNIN1S8DXARD62K/hstLs/GVYvWctb4e2ZKyphT5Ho6GoiJMwXXYOlaHc7/mYlLf3cu6Lu0xM/KA/jNViX2s83o2HIPrJ5OoBA9iKs71lXFyR/+OYO9Tc04gs4C+EOm1igikL1Wossb4WnwZJtA/8x/vjUJrNBaAZX4arCgLXWoiO7ZTZ31qtyFF83XjwOClqc8b31YFLZT5TEc3gBCUOjlGDdRpM7QMipfyI6dhwULpTerfbJna3v3higc5ZZMsKVLAKqMUwl4fsxQUaCZCxBBTrqB0PKTrVFOZQDFburf7oI03C6hHwfBy3L6YN0EXDZylvF+Sg8gjWmKVnnWcu1lxajaST70GDFT36krxBFTg3Q="
 cache:
   yarn: true
   directories:
@@ -15,14 +17,14 @@ script:
   - yarn build
 deploy:
   - provider: script
-    repo: konnectors/cozy-konnector-darty
+    repo: konnectors/darty
     skip-cleanup: true
-    script: yarn deploy
+    script: DEPLOY_BRANCH=build && yarn deploy && yarn cozyPublish
     on:
       branch: master
   - provider: script
-    repo: konnectors/cozy-konnector-darty
+    repo: konnectors/darty
     skip-cleanup: true
-    script: DEPLOY_BRANCH=latest yarn deploy
+    script: DEPLOY_BRANCH=latest && yarn deploy && yarn cozyPublish
     on:
       branch: prod
