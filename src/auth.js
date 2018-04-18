@@ -20,7 +20,7 @@ function authenticate(login, password) {
     }
   })
     .then(() => {
-      log('info', 'Login successful.')
+      log('info', 'Successfully logged in')
     })
     .catch(err => {
       if (err.statusCode === 401) throw new Error(errors.LOGIN_FAILED)
