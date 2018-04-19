@@ -5,12 +5,12 @@
   "language": "node",
   "icon": "icon.svg",
   "slug": "darty",
-  "source": "git://github.com/konnectors/cozy-konnector-darty.git",
+  "source": "git://github.com/konnectors/darty.git",
   "editor": "Cozy",
-  "vendorLink": "https://www.darty.com",
+  "vendor_link": "https://www.darty.com",
   "categories": ["shopping"],
   "fields": {
-    "email": {
+    "login": {
       "type": "email"
     },
     "password": {
@@ -23,7 +23,7 @@
       }
     }
   },
-  "dataType": [
+  "data_types": [
     "bill"
   ],
   "permissions": {
@@ -43,8 +43,8 @@
   },
   "developer": {
     "name": "Cozy",
-    "url": "cozy.io"
-  }
+    "url": "https://cozy.io"
+  },
   "langs": ["fr", "en"],
   "locales": {
     "fr": {
@@ -64,7 +64,7 @@
           "description": "Utilisé pour récupérer les informations de votre compte"
         }
       }
-    }
+    },
     "en": {
       "short_description": "Fetch your darty bills",
       "long_description": "Fetch your darty bills",
