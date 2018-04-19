@@ -4,10 +4,10 @@
   "type": "konnector",
   "language": "node",
   "icon": "icon.svg",
-  "slug": "darty-collect",
+  "slug": "darty",
   "source": "git://github.com/konnectors/darty.git",
   "editor": "Cozy",
-  "vendorLink": "https://www.darty.com",
+  "vendor_link": "https://www.darty.com",
   "categories": ["shopping"],
   "fields": {
     "login": {
@@ -23,7 +23,7 @@
       }
     }
   },
-  "dataType": [
+  "data_types": [
     "bill"
   ],
   "permissions": {
