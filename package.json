@@ -1,6 +1,6 @@
 {
   "name": "cozy-konnector-darty",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch your Darty bills",
   "repository": {
     "type": "git",
