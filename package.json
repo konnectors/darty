@@ -1,12 +1,17 @@
 {
   "name": "cozy-konnector-darty",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch your Darty bills",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/konnectors/darty.git"
   },
-  "keywords": ["cozy", "connector", "darty", "bills"],
+  "keywords": [
+    "cozy",
+    "connector",
+    "darty",
+    "bills"
+  ],
   "author": "Cozy Cloud",
   "license": "AGPL-3.0",
   "main": "./src/index.js",
@@ -41,7 +46,7 @@
     "eslint-config-cozy-app": "0.5.1",
     "git-directory-deploy": "1.5.1",
     "husky": "0.14.3",
-    "konitor": "0.7.0",
+    "konitor": "0.8.2",
     "webpack": "4.6.0",
     "webpack-cli": "2.0.15"
   }
