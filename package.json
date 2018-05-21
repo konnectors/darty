@@ -1,12 +1,17 @@
 {
   "name": "cozy-konnector-darty",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Fetch your Darty bills",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/konnectors/darty.git"
   },
-  "keywords": ["cozy", "connector", "darty", "bills"],
+  "keywords": [
+    "cozy",
+    "connector",
+    "darty",
+    "bills"
+  ],
   "author": "Cozy Cloud",
   "license": "AGPL-3.0",
   "main": "./src/index.js",
@@ -28,21 +33,22 @@
     "precommit": "yarn lint",
     "lint": "eslint --fix .",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/darty.git}",
-    "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})"
+    "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
+    "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.1.7"
+    "cozy-konnector-libs": "4.2.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "4.5.1",
-    "cozy-app-publish": "0.3.5",
-    "cozy-jobs-cli": "1.0.17",
+    "cozy-app-publish": "0.3.6",
+    "cozy-jobs-cli": "1.1.0",
     "eslint": "4.19.1",
-    "eslint-config-cozy-app": "0.5.1",
+    "eslint-config-cozy-app": "0.7.3",
     "git-directory-deploy": "1.5.1",
     "husky": "0.14.3",
-    "konitor": "0.7.0",
-    "webpack": "4.5.0",
-    "webpack-cli": "2.0.14"
+    "konitor": "0.8.3",
+    "webpack": "4.8.3",
+    "webpack-cli": "2.1.3"
   }
 }
