@@ -42,7 +42,7 @@
     }
   },
   "developer": {
-    "name": "Cozy",
+    "name": "Cozy Cloud",
     "url": "https://cozy.io"
   },
   "langs": ["fr", "en"],
@@ -83,5 +83,6 @@
         }
       }
     }
-  }
+  },
+  "manifest_version": "2"
 }
