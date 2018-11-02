@@ -1,3 +1,5 @@
 {
-  "extends": ["cozy-konnector"]
+  "extends": [
+    "config:base"
+  ]
 }
