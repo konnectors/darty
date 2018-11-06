@@ -3,7 +3,7 @@ const { rootUrl, request } = require('./request')
 const helpers = require('./helpers')
 
 const tableUrl = rootUrl + '/webapp/wcs/stores/controller/ec/products/table'
-const billPath = '/webapp/wcs/stores/controller/OrderBillDisplay'
+const billPath = '/webapp/wcs/stores/controller/'
 const firstPageNum = 1
 
 module.exports = {
