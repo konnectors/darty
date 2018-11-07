@@ -81,6 +81,10 @@ function parseRow($elem) {
   // Products without a *Download bill* button will have `billPath` undefined.
   product.billPath = $elem.find('a[data-tracking="bill-product"]').attr('href')
 
+  if (product.billPath === '#') {
+    log('warn', 'User action needed, a pdf bill needs to be generated')
+  }
+
   return product
 }
 
