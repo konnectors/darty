@@ -1,0 +1,95 @@
+{
+  "version": "1.3.0",
+  "name": "Darty",
+  "type": "konnector",
+  "language": "node",
+  "icon": "icon.svg",
+  "slug": "darty",
+  "source": "git://github.com/konnectors/darty.git",
+  "editor": "Cozy",
+  "vendor_link": "https://www.darty.com",
+  "categories": [
+    "shopping"
+  ],
+  "fields": {
+    "login": {
+      "type": "email"
+    },
+    "password": {
+      "type": "password"
+    },
+    "advancedFields": {
+      "folderPath": {
+        "advanced": true,
+        "isRequired": false
+      }
+    }
+  },
+  "data_types": [
+    "bill"
+  ],
+  "permissions": {
+    "bank operations": {
+      "type": "io.cozy.bank.operations"
+    },
+    "bills": {
+      "type": "io.cozy.bills"
+    },
+    "files": {
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "type": "io.cozy.accounts",
+      "verbs": [
+        "GET"
+      ]
+    }
+  },
+  "developer": {
+    "name": "Cozy Cloud",
+    "url": "https://cozy.io"
+  },
+  "langs": [
+    "fr",
+    "en"
+  ],
+  "locales": {
+    "fr": {
+      "short_description": "Récupère vos factures darty",
+      "long_description": "Récupère vos factures darty",
+      "permissions": {
+        "bank operations": {
+          "description": "Utilisé pour relier les factures à des operations bancaires"
+        },
+        "bills": {
+          "description": "Utilisé pour sauver les données des factures"
+        },
+        "files": {
+          "description": "Utilisé pour sauvegarder les factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour récupérer les informations de votre compte"
+        }
+      }
+    },
+    "en": {
+      "short_description": "Fetch your darty bills",
+      "long_description": "Fetch your darty bills",
+      "permissions": {
+        "bank operations": {
+          "description": "Required to link bank operations to bills"
+        },
+        "bills": {
+          "description": "Required to save the bills data"
+        },
+        "files": {
+          "description": "Required to save the file documents"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
+    }
+  },
+  "manifest_version": "2"
+}
