@@ -1,11 +1,11 @@
 const { log, saveBills } = require('cozy-konnector-libs')
 const { rootUrl, request } = require('./request')
 const helpers = require('./helpers')
-const sleep = require('util').promisify(global.setTimeout)
+// const sleep = require('util').promisify(global.setTimeout)
 
 const tableUrl = rootUrl + '/webapp/wcs/stores/controller/ec/products/table'
-const generateBillUrl =
-  rootUrl + '/webapp/wcs/stores/controller/FactureMagasinGeneration'
+// const generateBillUrl =
+//   rootUrl + '/webapp/wcs/stores/controller/FactureMagasinGeneration'
 const billPath = '/webapp/wcs/stores/controller/'
 
 const firstPageNum = 1
@@ -60,33 +60,35 @@ async function requestTable(pageNum) {
   }
   const $ = await request(options)
 
-  const toGenerate = $('.download-bills-desktop a[data-token]')
-  if (toGenerate.length) {
-    log('info', `${toGenerate.length} bills to generate`)
-    for (const bill of Array.from(toGenerate)) {
-      await generateBill(bill, $)
-      break
-    }
-    return request(options)
-  } else return $
+  return $
+
+  // const toGenerate = $('.download-bills-desktop a[data-token]')
+  // if (toGenerate.length) {
+  //   log('info', `${toGenerate.length} bills to generate`)
+  //   for (const bill of Array.from(toGenerate)) {
+  //     await generateBill(bill, $)
+  //     break
+  //   }
+  //   return request(options)
+  // } else return $
 }
 
-async function generateBill(bill, $) {
-  const data = $(bill).data()
-  const options = {
-    url: generateBillUrl,
-    qs: {
-      numCmd: data.num,
-      placeOrderTime: data.time,
-      token: data.token
-    }
-  }
-  for (let i = 0; i <= 5; i++) {
-    await request.post(options)
-    await sleep(1000)
-  }
-  log('info', `Bill ${data.num} generation done`)
-}
+// async function generateBill(bill, $) {
+//   const data = $(bill).data()
+//   const options = {
+//     url: generateBillUrl,
+//     qs: {
+//       numCmd: data.num,
+//       placeOrderTime: data.time,
+//       token: data.token
+//     }
+//   }
+//   for (let i = 0; i <= 5; i++) {
+//     await request.post(options)
+//     await sleep(1000)
+//   }
+//   log('info', `Bill ${data.num} generation done`)
+// }
 
 function parseTable(pageNum, $) {
   log('info', `Parsing products page ${pageNum}...`)
