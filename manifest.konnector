@@ -91,5 +91,6 @@
       }
     }
   },
+  "banksTransactionRegExp": "\\bdarty\\b",
   "manifest_version": "2"
 }
