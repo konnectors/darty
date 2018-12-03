@@ -1,11 +1,11 @@
-const { log, saveBills } = require('cozy-konnector-libs')
+const { log, saveBills, cozyClient } = require('cozy-konnector-libs')
 const { rootUrl, request } = require('./request')
 const helpers = require('./helpers')
-// const sleep = require('util').promisify(global.setTimeout)
+const sleep = require('util').promisify(global.setTimeout)
 
 const tableUrl = rootUrl + '/webapp/wcs/stores/controller/ec/products/table'
-// const generateBillUrl =
-//   rootUrl + '/webapp/wcs/stores/controller/FactureMagasinGeneration'
+const generateBillUrl =
+  rootUrl + '/webapp/wcs/stores/controller/FactureMagasinGeneration'
 const billPath = '/webapp/wcs/stores/controller/'
 
 const firstPageNum = 1
@@ -16,7 +16,7 @@ module.exports = {
 
 function fetchBills(folderPath) {
   return fetchPagesCount()
-    .then(fetchPages)
+    .then(count => fetchPages(count, folderPath))
     .then(products => fetchBillFiles(products, folderPath))
 }
 
@@ -32,21 +32,64 @@ function parsePagesCount($) {
   return lastPageString ? parseInt(lastPageString) : firstPageNum
 }
 
-function fetchPages(pagesCount) {
+async function fetchPages(pagesCount, folderPath) {
   log('info', `Found ${pagesCount} product page(s).`)
 
-  let productsPromise = Promise.resolve([])
-
+  let products = []
   for (let pageNum = firstPageNum; pageNum <= pagesCount; pageNum++) {
-    productsPromise = productsPromise.then(products =>
-      fetchPage(pageNum).then(foundProducts => products.concat(foundProducts))
+    const foundProducts = await fetchPageAndGenerateBillsIfNeeded(
+      pageNum,
+      folderPath
+    )
+    products = products.concat(foundProducts)
+  }
+
+  return products
+}
+
+async function filterNonExistingProductsInCozy(products, folderPath) {
+  let result = []
+  for (let product of products) {
+    const bill = billEntry(product)
+
+    try {
+      await cozyClient.files.statByPath(folderPath + '/' + bill.filename)
+    } catch (err) {
+      result.push(product)
+    }
+  }
+  return result
+}
+
+async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath) {
+  let products = await fetchPage(pageNum)
+  let productsToGenerate = products.filter(p => p.generateData)
+  const newProducts = await filterNonExistingProductsInCozy(
+    productsToGenerate,
+    folderPath
+  )
+  log(
+    'info',
+    `Found ${newProducts.length} products pdf on page ${pageNum} to generate`
+  )
+
+  if (newProducts.length) {
+    await generateProductsPdfs(newProducts)
+    await sleep(10000)
+    products = await fetchPage(pageNum)
+    productsToGenerate = products.filter(p => p.generateDate)
+    log(
+      'warn',
+      `Still ${
+        productsToGenerate.length
+      } products pdf on page ${pageNum} to generate...`
     )
   }
 
-  return productsPromise
+  return products
 }
 
-function fetchPage(pageNum) {
+async function fetchPage(pageNum) {
   return requestTable(pageNum).then($ => parseTable(pageNum, $))
 }
 
@@ -58,43 +101,33 @@ async function requestTable(pageNum) {
       pagination: pageNum.toString()
     }
   }
-  const $ = await request(options)
-
-  return $
-
-  // const toGenerate = $('.download-bills-desktop a[data-token]')
-  // if (toGenerate.length) {
-  //   log('info', `${toGenerate.length} bills to generate`)
-  //   for (const bill of Array.from(toGenerate)) {
-  //     await generateBill(bill, $)
-  //     break
-  //   }
-  //   return request(options)
-  // } else return $
+  return request(options)
 }
 
-// async function generateBill(bill, $) {
-//   const data = $(bill).data()
-//   const options = {
-//     url: generateBillUrl,
-//     qs: {
-//       numCmd: data.num,
-//       placeOrderTime: data.time,
-//       token: data.token
-//     }
-//   }
-//   for (let i = 0; i <= 5; i++) {
-//     await request.post(options)
-//     await sleep(1000)
-//   }
-//   log('info', `Bill ${data.num} generation done`)
-// }
+async function generateProductsPdfs(products) {
+  for (const product of products) {
+    const data = product.generateData
+    const options = {
+      url: generateBillUrl,
+      qs: {
+        numCmd: data.num,
+        placeOrderTime: data.time,
+        token: data.token
+      }
+    }
+    await request.post(options)
+  }
+}
 
 function parseTable(pageNum, $) {
   log('info', `Parsing products page ${pageNum}...`)
 
   const products = $('.item_product')
-    .map((_, elem) => parseRow($(elem)))
+    .map((_, elem) => {
+      const result = parseRow($(elem))
+      result.$ = $
+      return result
+    })
     .get()
 
   return products
@@ -113,6 +146,11 @@ function parseRow($elem) {
 
   if (product.billPath === '#') {
     log('warn', 'User action needed, a pdf bill needs to be generated')
+  }
+
+  const aWithToken = $elem.find('a[data-token]')
+  if (aWithToken.length) {
+    product.generateData = aWithToken.data()
   }
 
   return product
