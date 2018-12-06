@@ -78,12 +78,14 @@ async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath) {
     await sleep(10000)
     products = await fetchPage(pageNum)
     productsToGenerate = products.filter(p => p.generateDate)
-    log(
-      'warn',
-      `Still ${
-        productsToGenerate.length
-      } products pdf on page ${pageNum} to generate...`
-    )
+    if (productsToGenerate.length) {
+      log(
+        'warn',
+        `Still ${
+          productsToGenerate.length
+        } products pdf on page ${pageNum} to generate...`
+      )
+    }
   }
 
   return products
@@ -115,6 +117,7 @@ async function generateProductsPdfs(products) {
         token: data.token
       }
     }
+    log('info', `Generating pdf for product : ${product.description}`)
     await request.post(options)
   }
 }
@@ -143,10 +146,6 @@ function parseRow($elem) {
   // Products with a *Download bill* button will have `billPath` set.
   // Products without a *Download bill* button will have `billPath` undefined.
   product.billPath = $elem.find('a[data-tracking="bill-product"]').attr('href')
-
-  if (product.billPath === '#') {
-    log('warn', 'User action needed, a pdf bill needs to be generated')
-  }
 
   const aWithToken = $elem.find('a[data-token]')
   if (aWithToken.length) {
