@@ -5,7 +5,7 @@
   "language": "node",
   "icon": "icon.svg",
   "slug": "darty",
-  "source": "git://github.com/konnectors/darty.git",
+  "source": "git@github.com:konnectors/darty.git",
   "editor": "Cozy",
   "vendor_link": "https://www.darty.com",
   "categories": [
