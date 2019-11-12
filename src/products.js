@@ -81,9 +81,7 @@ async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath) {
     if (productsToGenerate.length) {
       log(
         'warn',
-        `Still ${
-          productsToGenerate.length
-        } products pdf on page ${pageNum} to generate...`
+        `Still ${productsToGenerate.length} products pdf on page ${pageNum} to generate...`
       )
     }
   }
