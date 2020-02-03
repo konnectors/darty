@@ -1,10 +1,8 @@
 language: node_js
 node_js:
-- '8'
+- '12'
 env:
   global:
-  - GH_USER_EMAIL="travis@example.org"
-  - GH_USER_NAME="cozy-bot"
   - DEPLOY_REPOSITORY="git@github.com:konnectors/darty.git"
   - secure: U67FdllXSDCdDiW88H708YaGeiHq5XPW1AZKtJM6SLzwF0iY7Ax4S6aEmKiuOEnuXW7Q/jixXaSKajCDksvUPS9HksBxqdnfbOfnN8WCv1EemPmXb5nAj5drkyhrAjYn5brX94rf35G3a7GZLsqewBK/cFUaGZmcq3lAhup+WZGEqMojSE2cqik8Uf8MCpvGZ+P/WEMsSZXiJlMpYPehSfS2/X4tWfgdz3h6+M6x3S3dN1CAWWUyuy62ftJsh+S3VpX6Q2oFrlNkwBvDaXp1XjjtE9ghiMJmyXxUYCCexzXirp2yoK6d79rLT13fSli53FLnSwbr6UqP+KieoeYHYnUQVsVFCMe92GymGYu7kusI2sjQRMkA2XnHXj/NPOOABmCD9slxlfhOPIXG/oEOngSPNwgLptuJZTcdSDnbgKdVBjN5kV0VG1I3CHmRF9upjTE6bnMOZESq4rh+tGWdzd3myUWTCh0hq2dQCtJ/pzlQykJfOP/PZL1Fci59elwL+vsrOXjtvJZ1zk3zcOt20wkV35TLOMFvz4I+GybciOiBfPlFmO5Ne+C/zS9+HtcbN8aVfTk/jNUeR9rCDP+yMEUMlu2Pc+0qZ2ESwbq8CtK3aExR/ho5d+nR35ZAPMyg4O/O1cIpP34FDWAmCLWQFM70jlxxXdXYy01/QU53oKA=
 cache:
@@ -18,7 +16,6 @@ branches:
 script:
 - yarn lint
 - yarn build
-- yarn run check
 deploy:
 - provider: script
   skip-cleanup: true
