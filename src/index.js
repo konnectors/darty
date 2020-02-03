@@ -9,8 +9,11 @@ const products = require('./products')
 
 module.exports = new BaseKonnector(start)
 
-function start(fields) {
-  return authenticate(fields.login, fields.password)
-    .then(() => products.fetchBills(fields.folderPath))
-    .catch(helpers.fixErrors)
+async function start(fields) {
+  try {
+    await authenticate(fields.login, fields.password)
+    await products.fetchBills(fields, this)
+  } catch (err) {
+    helpers.fixErrors(err)
+  }
 }

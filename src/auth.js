@@ -13,7 +13,7 @@ async function authenticate(login, password) {
   log('info', 'Authenticating...')
   try {
     await request.get('https://www.darty.com/espace_client/connexion')
-    await sleep(10000)
+    await sleep(3000)
     await request.post({
       uri: loginUrl,
       form: {

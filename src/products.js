@@ -14,10 +14,10 @@ module.exports = {
   fetchBills
 }
 
-function fetchBills(folderPath) {
+function fetchBills(fields, self) {
   return fetchPagesCount()
-    .then(count => fetchPages(count, folderPath))
-    .then(products => fetchBillFiles(products, folderPath))
+    .then(count => fetchPages(count, fields.folderPath))
+    .then(products => fetchBillFiles(products, fields, self))
 }
 
 function fetchPagesCount() {
@@ -153,14 +153,15 @@ function parseRow($elem) {
   return product
 }
 
-function fetchBillFiles(products, folderPath) {
+function fetchBillFiles(products, fields, self) {
   products = keepWhenBillAvailable(products)
   log('info', `Downloading ${products.length} bill(s)...`)
-  return helpers.mkdirp(folderPath).then(() => {
-    const billEntries = products.map(billEntry)
-    return saveBills(billEntries, folderPath, {
-      identifiers: ['darty']
-    })
+  const billEntries = products.map(billEntry)
+  return saveBills(billEntries, fields, {
+    linkBankOperations: false,
+    sourceAccount: self.accountId,
+    sourceAccountIdentifier: fields.login,
+    fileIdAttributes: ['vendorRef']
   })
 }
 
@@ -174,6 +175,7 @@ function billEntry(product) {
   const { date, isoDateString } = helpers.parseFrenchDate(product.omnitureDate)
 
   return {
+    vendorRef: product.omnitureCodic,
     amount: helpers.parseAmount(product.omniturePrix),
     date,
     // Prefix filename with ISO-like date to get sensible default order.
