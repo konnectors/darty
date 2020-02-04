@@ -1,5 +1,5 @@
-const { log, saveBills, cozyClient } = require('cozy-konnector-libs')
-const { rootUrl, request } = require('./request')
+const { log, cozyClient } = require('cozy-konnector-libs')
+const { rootUrl } = require('./request')
 const helpers = require('./helpers')
 const sleep = require('util').promisify(global.setTimeout)
 
@@ -15,13 +15,13 @@ module.exports = {
 }
 
 function fetchBills(fields, self) {
-  return fetchPagesCount()
-    .then(count => fetchPages(count, fields.folderPath))
+  return fetchPagesCount(self)
+    .then(count => fetchPages(count, fields.folderPath, self))
     .then(products => fetchBillFiles(products, fields, self))
 }
 
-function fetchPagesCount() {
-  return requestTable(firstPageNum).then(parsePagesCount)
+function fetchPagesCount(self) {
+  return requestTable(firstPageNum, self).then(parsePagesCount)
 }
 
 function parsePagesCount($) {
@@ -32,14 +32,15 @@ function parsePagesCount($) {
   return lastPageString ? parseInt(lastPageString) : firstPageNum
 }
 
-async function fetchPages(pagesCount, folderPath) {
+async function fetchPages(pagesCount, folderPath, self) {
   log('info', `Found ${pagesCount} product page(s).`)
 
   let products = []
   for (let pageNum = firstPageNum; pageNum <= pagesCount; pageNum++) {
     const foundProducts = await fetchPageAndGenerateBillsIfNeeded(
       pageNum,
-      folderPath
+      folderPath,
+      self
     )
     products = products.concat(foundProducts)
   }
@@ -61,8 +62,8 @@ async function filterNonExistingProductsInCozy(products, folderPath) {
   return result
 }
 
-async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath) {
-  let products = await fetchPage(pageNum)
+async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath, self) {
+  let products = await fetchPage(pageNum, self)
   let productsToGenerate = products.filter(p => p.generateData)
   const newProducts = await filterNonExistingProductsInCozy(
     productsToGenerate,
@@ -74,9 +75,9 @@ async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath) {
   )
 
   if (newProducts.length) {
-    await generateProductsPdfs(newProducts)
+    await generateProductsPdfs(newProducts, self)
     await sleep(10000)
-    products = await fetchPage(pageNum)
+    products = await fetchPage(pageNum, self)
     productsToGenerate = products.filter(p => p.generateDate)
     if (productsToGenerate.length) {
       log(
@@ -89,11 +90,11 @@ async function fetchPageAndGenerateBillsIfNeeded(pageNum, folderPath) {
   return products
 }
 
-async function fetchPage(pageNum) {
-  return requestTable(pageNum).then($ => parseTable(pageNum, $))
+async function fetchPage(pageNum, self) {
+  return requestTable(pageNum, self).then($ => parseTable(pageNum, $))
 }
 
-async function requestTable(pageNum) {
+async function requestTable(pageNum, self) {
   const options = {
     url: tableUrl,
     qs: {
@@ -101,10 +102,10 @@ async function requestTable(pageNum) {
       pagination: pageNum.toString()
     }
   }
-  return request(options)
+  return self.request(options)
 }
 
-async function generateProductsPdfs(products) {
+async function generateProductsPdfs(products, self) {
   for (const product of products) {
     const data = product.generateData
     const options = {
@@ -116,7 +117,7 @@ async function generateProductsPdfs(products) {
       }
     }
     log('info', `Generating pdf for product : ${product.description}`)
-    await request.post(options)
+    await self.request.post(options)
   }
 }
 
@@ -157,7 +158,7 @@ function fetchBillFiles(products, fields, self) {
   products = keepWhenBillAvailable(products)
   log('info', `Downloading ${products.length} bill(s)...`)
   const billEntries = products.map(billEntry)
-  return saveBills(billEntries, fields, {
+  return self.saveBills(billEntries, fields, {
     linkBankOperations: false,
     sourceAccount: self.accountId,
     sourceAccountIdentifier: fields.login,

@@ -1,5 +1,5 @@
 const { log, errors } = require('cozy-konnector-libs')
-const { rootUrl, request } = require('./request')
+const { rootUrl } = require('./request')
 const sleep = require('util').promisify(global.setTimeout)
 
 const loginUrl = rootUrl + '/espace_client/connexion'
@@ -9,12 +9,12 @@ module.exports = {
 }
 
 // Darty temporarily disables an account after 5 login failures.
-async function authenticate(login, password) {
+async function authenticate(login, password, self) {
   log('info', 'Authenticating...')
   try {
-    await request.get('https://www.darty.com/espace_client/connexion')
+    await self.request.get('https://www.darty.com/espace_client/connexion')
     await sleep(3000)
-    await request.post({
+    await self.request.post({
       uri: loginUrl,
       form: {
         email: login,
