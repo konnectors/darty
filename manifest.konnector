@@ -1,11 +1,11 @@
 {
-  "version": "1.3.0",
+  "version": "1.5.0",
   "name": "Darty",
   "type": "konnector",
   "language": "node",
   "icon": "icon.svg",
   "slug": "darty",
-  "source": "git://github.com/konnectors/darty.git",
+  "source": "git@github.com:konnectors/darty.git",
   "editor": "Cozy",
   "vendor_link": "https://www.darty.com",
   "categories": [
@@ -91,5 +91,6 @@
       }
     }
   },
+  "banksTransactionRegExp": "\\bdarty\\b",
   "manifest_version": "2"
 }
