@@ -12,7 +12,12 @@ module.exports = {
 async function authenticate(login, password, self) {
   log('info', 'Authenticating...')
   try {
-    await self.request.get('https://www.darty.com/espace_client/connexion')
+    await self.request.get('https://www.darty.com/espace_client/connexion', {
+      headers: {
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      }
+    })
     await sleep(3000)
     await self.request.post({
       uri: loginUrl,
@@ -23,10 +28,7 @@ async function authenticate(login, password, self) {
       headers: {
         referer: 'https://www.darty.com/espace_client/connexion',
         Accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
-        Pragma: 'no-cache',
-        'Cache-Control': 'no-cache'
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
       }
     })
 
