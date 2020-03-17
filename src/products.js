@@ -160,8 +160,6 @@ function fetchBillFiles(products, fields, self) {
   const billEntries = products.map(billEntry)
   return self.saveBills(billEntries, fields, {
     linkBankOperations: false,
-    sourceAccount: self.accountId,
-    sourceAccountIdentifier: fields.login,
     fileIdAttributes: ['vendorRef']
   })
 }
