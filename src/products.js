@@ -25,9 +25,7 @@ function fetchPagesCount(self) {
 }
 
 function parsePagesCount($) {
-  const lastPageString = $('a[data-page]')
-    .last()
-    .data('page')
+  const lastPageString = $('a[data-page]').last().data('page')
 
   return lastPageString ? parseInt(lastPageString) : firstPageNum
 }
